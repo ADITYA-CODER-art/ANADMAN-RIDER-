@@ -26,6 +26,32 @@
       background-color: #0b1120;
       color: #ffffff;
       overflow-x: hidden;
+      top: 0 !important; /* Google translate banner fix */
+    }
+
+    /* Google Translate Widget Styling */
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .goog-te-gadget-simple {
+      background-color: transparent !important;
+      border: none !important;
+      font-size: 0.85rem !important;
+    }
+
+    .goog-te-gadget-simple span {
+      color: #38bdf8 !important;
+    }
+
+    .goog-te-banner-frame {
+      display: none !important;
     }
 
     /* Navigation Bar */
@@ -35,7 +61,7 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(11, 17, 32, 0.7);
+      background: rgba(11, 17, 32, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -47,6 +73,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .logo {
@@ -65,7 +93,7 @@
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
       list-style: none;
       align-items: center;
     }
@@ -82,23 +110,7 @@
       color: #38bdf8;
     }
 
-    .btn-nav {
-      background: #0284c7;
-      color: #ffffff;
-      border: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    .btn-nav:hover {
-      background: #0369a1;
-    }
-
-    /* Hero Banner with Direct Image */
+    /* Hero Banner */
     .hero {
       position: relative;
       min-height: 70vh;
@@ -108,7 +120,7 @@
       align-items: center;
       text-align: center;
       padding: 8rem 1.5rem 4rem;
-      background: linear-gradient(180deg, rgba(11, 17, 32, 0.5) 0%, rgba(11, 17, 32, 0.9) 80%, #0b1120 100%),
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.6) 0%, rgba(11, 17, 32, 0.95) 80%, #0b1120 100%),
                   url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
     }
 
@@ -317,12 +329,18 @@
       <a href="#" class="logo">
         <i class="fa-solid fa-motorcycle"></i> Pandav Rider
       </a>
+      
       <ul class="nav-links">
         <li><a href="#" class="active">Home</a></li>
         <li><a href="#map-section">Live Map</a></li>
         <li><a href="#directory">Locations & Details</a></li>
       </ul>
-      <button class="btn-nav"><i class="fa-solid fa-phone"></i> Emergency Help</button>
+
+      <!-- Google Translate Language Selector -->
+      <div class="language-selector">
+        <i class="fa-solid fa-language" style="color:#38bdf8;"></i>
+        <div id="google_translate_element"></div>
+      </div>
     </div>
   </header>
 
@@ -380,10 +398,20 @@
   <!-- Leaflet Javascript -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Comprehensive Location Data with HD Unsplash Photo Links
     const locationsData = [
       {
         id: 1,
@@ -467,7 +495,6 @@
       }
     ];
 
-    // Initialize Map with Center Focus on Andaman Islands
     const map = L.map('map').setView([11.7401, 92.7340], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -478,7 +505,6 @@
     let markers = [];
 
     function renderContent(filter = 'all') {
-      // Clear Existing Markers
       markers.forEach(m => map.removeLayer(m));
       markers = [];
 
@@ -490,7 +516,6 @@
         : locationsData.filter(item => item.category === filter);
 
       filteredData.forEach(item => {
-        // Dynamic Icon Styling
         let markerColor = item.category === 'attraction' ? '#0284c7' : (item.category === 'hotel' ? '#10b981' : '#f59e0b');
         let iconName = item.category === 'attraction' ? 'fa-camera' : (item.category === 'hotel' ? 'fa-hotel' : 'fa-gas-pump');
 
@@ -502,12 +527,10 @@
           iconSize: [28, 28]
         });
 
-        // Add Map Pin Marker
         const marker = L.marker([item.lat, item.lng], { icon: customIcon }).addTo(map);
         marker.bindPopup(`<b>${item.name}</b><br>${item.desc}`);
         markers.push(marker);
 
-        // Add Card Component
         const cardHTML = `
           <div class="card">
             <div class="card-img">
@@ -534,7 +557,6 @@
       renderContent(category);
     }
 
-    // Initial Load
     renderContent('all');
   </script>
 </body>
