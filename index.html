@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andaman & Nicobar Ultimate Live Map & Travel Guide</title>
+  <title>Pandav Rider | Andaman Live Map & Travel Guide</title>
   
-  <!-- Fonts & Icons -->
+  <!-- Google Fonts & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -28,15 +28,15 @@
       overflow-x: hidden;
     }
 
-    /* Header */
+    /* Navigation Bar */
     header {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(11, 17, 32, 0.6);
-      backdrop-filter: blur(10px);
+      background: rgba(11, 17, 32, 0.7);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -53,10 +53,14 @@
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #ffffff;
       text-decoration: none;
+    }
+
+    .logo i {
+      color: #38bdf8;
     }
 
     .nav-links {
@@ -75,7 +79,7 @@
     }
 
     .nav-links a:hover, .nav-links a.active {
-      color: #ffffff;
+      color: #38bdf8;
     }
 
     .btn-nav {
@@ -87,50 +91,56 @@
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 600;
+      transition: background 0.3s;
     }
 
-    /* Hero Section */
+    .btn-nav:hover {
+      background: #0369a1;
+    }
+
+    /* Hero Banner with Direct Image */
     .hero {
       position: relative;
-      min-height: 75vh;
+      min-height: 70vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 8rem 1.5rem 4rem;
-      background: linear-gradient(180deg, rgba(11, 17, 32, 0.4) 0%, rgba(11, 17, 32, 0.9) 80%, #0b1120 100%),
-                  url('bg.jpg') center/cover no-repeat;
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.5) 0%, rgba(11, 17, 32, 0.9) 80%, #0b1120 100%),
+                  url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(217, 119, 6, 0.25);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      color: #fef3c7;
-      padding: 0.35rem 0.9rem;
+      background: rgba(14, 165, 233, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #7dd3fc;
+      padding: 0.4rem 1rem;
       border-radius: 20px;
-      font-size: 0.8rem;
-      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
     }
 
     .hero h1 {
       font-size: 3.2rem;
-      font-weight: 700;
-      margin-bottom: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
     }
 
     .hero p {
-      max-width: 650px;
+      max-width: 680px;
       color: #cbd5e1;
-      font-size: 1rem;
+      font-size: 1.05rem;
       line-height: 1.6;
       margin-bottom: 2rem;
     }
 
-    /* Interactive Explorer Section */
+    /* Explorer Section */
     .explorer-section {
       max-width: 1200px;
       margin: 2rem auto 5rem;
@@ -140,32 +150,35 @@
     .section-title {
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* Filter Tabs */
+    /* Filter Buttons */
     .filter-tabs {
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       margin-bottom: 2rem;
       overflow-x: auto;
       padding-bottom: 0.5rem;
     }
 
     .tab-btn {
-      background: rgba(30, 41, 59, 0.6);
+      background: rgba(30, 41, 59, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #94a3b8;
-      padding: 0.6rem 1.4rem;
+      padding: 0.65rem 1.4rem;
       border-radius: 30px;
       cursor: pointer;
       font-weight: 500;
       font-size: 0.9rem;
       transition: all 0.3s;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .tab-btn.active, .tab-btn:hover {
@@ -174,44 +187,45 @@
       border-color: #0284c7;
     }
 
-    /* Live Map Container */
+    /* Live Map Box */
     #map {
       width: 100%;
-      height: 450px;
+      height: 480px;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      margin-bottom: 3rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 3.5rem;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
     }
 
-    /* Cards Grid */
+    /* Cards Layout Grid */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
     }
 
     .card {
       background: rgba(30, 41, 59, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 1.2rem;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s, border-color 0.3s;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(2, 132, 199, 0.5);
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .card-img {
       width: 100%;
-      height: 140px;
-      border-radius: 10px;
+      height: 160px;
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       position: relative;
     }
 
@@ -219,32 +233,39 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .card:hover .card-img img {
+      transform: scale(1.05);
     }
 
     .card-badge {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      padding: 3px 8px;
-      border-radius: 6px;
+      top: 10px;
+      left: 10px;
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 4px 10px;
+      border-radius: 8px;
       font-size: 0.75rem;
       color: #38bdf8;
       font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .card h3 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       margin-bottom: 0.5rem;
       font-weight: 600;
+      color: #f8fafc;
     }
 
     .card p {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: #94a3b8;
       line-height: 1.5;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       flex-grow: 1;
     }
 
@@ -252,8 +273,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.9rem;
       font-size: 0.8rem;
       color: #cbd5e1;
     }
@@ -264,173 +285,191 @@
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      transition: color 0.2s;
     }
 
     .map-link:hover {
+      color: #7dd3fc;
       text-decoration: underline;
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       font-size: 0.85rem;
       color: #64748b;
+      background: rgba(11, 17, 32, 0.9);
     }
 
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.3rem; }
+      .hero h1 { font-size: 2.2rem; }
       .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Header -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
-        <i class="fa-regular fa-compass"></i> Andaman Live Hub
+        <i class="fa-solid fa-motorcycle"></i> Pandav Rider
       </a>
       <ul class="nav-links">
         <li><a href="#" class="active">Home</a></li>
         <li><a href="#map-section">Live Map</a></li>
-        <li><a href="#directory">Hotels & Fuel</a></li>
+        <li><a href="#directory">Locations & Details</a></li>
       </ul>
-      <button class="btn-nav">Emergency Help</button>
+      <button class="btn-nav"><i class="fa-solid fa-phone"></i> Emergency Help</button>
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Banner -->
   <section class="hero">
     <div class="hero-badge">
-      <i class="fa-solid fa-map-location-dot"></i> Live Map & Complete Tourist Directory
+      <i class="fa-solid fa-map-pin"></i> Andaman Live Explorer
     </div>
     <h1>Andaman & Nicobar Islands</h1>
     <p>
-      Explore live interactive maps, top-rated hotels, famous tourist attractions, and fuel/gas stations across Port Blair & Havelock.
+      Discover top tourist attractions, luxury hotels, and essential fuel & gas stations across Port Blair, Havelock Island, and Neil Island in real time.
     </p>
   </section>
 
-  <!-- Main Content & Live Map Hub -->
+  <!-- Live Map & Locations Hub -->
   <section id="map-section" class="explorer-section">
     <div class="section-title">
-      <span>Live Interactive Tourist Map 🗺️</span>
+      <span><i class="fa-solid fa-earth-asia" style="color: #38bdf8;"></i> Live Interactive Map</span>
     </div>
     
-    <!-- Filter Category Buttons -->
+    <!-- Category Filter Tabs -->
     <div class="filter-tabs">
-      <button class="tab-btn active" onclick="filterCategory('all')">Show All</button>
-      <button class="tab-btn" onclick="filterCategory('attraction')">🏛️ Attractions</button>
-      <button class="tab-btn" onclick="filterCategory('hotel')">🏨 Hotels & Resorts</button>
-      <button class="tab-btn" onclick="filterCategory('fuel')">⛽ Gas Stations / Fuel</button>
+      <button class="tab-btn active" onclick="filterCategory('all', event)">
+        <i class="fa-solid fa-border-all"></i> Show All
+      </button>
+      <button class="tab-btn" onclick="filterCategory('attraction', event)">
+        <i class="fa-solid fa-camera"></i> Attractions
+      </button>
+      <button class="tab-btn" onclick="filterCategory('hotel', event)">
+        <i class="fa-solid fa-hotel"></i> Hotels & Resorts
+      </button>
+      <button class="tab-btn" onclick="filterCategory('fuel', event)">
+        <i class="fa-solid fa-gas-pump"></i> Fuel & Gas Stations
+      </button>
     </div>
 
-    <!-- Live Map Container -->
+    <!-- Map Render Box -->
     <div id="map"></div>
 
     <div class="section-title" id="directory">
-      <span>Complete Guide & Locations Details</span>
+      <span><i class="fa-solid fa-list-check" style="color: #38bdf8;"></i> Detailed Location Directory</span>
     </div>
 
-    <!-- Dynamic Directory Cards Grid -->
+    <!-- Dynamic Location Cards -->
     <div class="cards-grid" id="cardsGrid">
-      <!-- Cards will be injected via JavaScript -->
+      <!-- Dynamic Javascript Content -->
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    Copyright &copy; <span id="year"></span> Andaman Live Tourism Guide. All rights reserved.
+    Copyright &copy; <span id="year"></span> Pandav Rider - Andaman Travel Guide. All rights reserved.
   </footer>
 
-  <!-- Leaflet JS for Map -->
+  <!-- Leaflet Javascript -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script>
-    // Copyright year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Comprehensive Andaman Database (Attractions, Hotels, Gas Stations)
+    // Comprehensive Location Data with HD Unsplash Photo Links
     const locationsData = [
       {
         id: 1,
-        name: "Cellular Jail",
+        name: "Cellular Jail National Memorial",
         category: "attraction",
         lat: 11.6734,
         lng: 92.7506,
-        desc: "Historic colonial prison in Port Blair showcasing India's freedom struggle.",
-        img: "bg.jpg",
-        sub: "Port Blair"
+        desc: "Historic colonial prison in Port Blair showcasing India's freedom struggle with sound and light shows.",
+        img: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=700&q=80",
+        sub: "Port Blair • Historical Site"
       },
       {
         id: 2,
-        name: "Radhanagar Beach (Swaraj Dweep)",
+        name: "Radhanagar Beach (Beach No. 7)",
         category: "attraction",
         lat: 11.9831,
         lng: 92.9515,
-        desc: "Ranked among Asia's best beaches, known for turquoise waters and white sand.",
-        img: "bg.jpg",
-        sub: "Havelock Island"
+        desc: "World-famous white sand beach with crystal blue water, perfect for sunset views.",
+        img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80",
+        sub: "Havelock Island • Beach"
       },
       {
         id: 3,
+        name: "Elephant Beach Scuba Hub",
+        category: "attraction",
+        lat: 11.9890,
+        lng: 92.9350,
+        desc: "Popular destination for water sports including Scuba Diving, Snorkeling, and Sea Walk.",
+        img: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=700&q=80",
+        sub: "Havelock Island • Water Sports"
+      },
+      {
+        id: 4,
         name: "Sinclairs Bayview Hotel",
         category: "hotel",
         lat: 11.6953,
         lng: 92.7482,
-        desc: "Premium beachside hotel offering panoramic views of the Bay of Bengal.",
-        img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80",
-        sub: "Hotel • Port Blair"
+        desc: "Seafacing luxury hotel offering panoramic Bay of Bengal ocean views and fine dining.",
+        img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=80",
+        sub: "Port Blair • Hotel"
       },
       {
-        id: 4,
+        id: 5,
         name: "Taj Exotica Resort & Spa",
         category: "hotel",
         lat: 11.9680,
         lng: 92.9720,
-        desc: "Luxury 5-star beachfront resort nestled amidst coconut palms on Radhanagar beach.",
-        img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=500&q=80",
-        sub: "Luxury Resort • Havelock"
+        desc: "5-Star luxury resort spread across 46 acres surrounded by coconut groves.",
+        img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=700&q=80",
+        sub: "Havelock • 5 Star Resort"
       },
       {
-        id: 5,
+        id: 6,
+        name: "Symphony Palms Beach Resort",
+        category: "hotel",
+        lat: 11.9720,
+        lng: 92.9850,
+        desc: "Beautiful cottages right on the beach with private access to the sea.",
+        img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=700&q=80",
+        sub: "Havelock • Beach Resort"
+      },
+      {
+        id: 7,
         name: "IOCL Petrol Pump (PB Filling Station)",
         category: "fuel",
         lat: 11.6521,
         lng: 92.7385,
-        desc: "Primary fuel & gas station in Port Blair for vehicle rentals and cabs.",
-        img: "https://images.unsplash.com/photo-1527018260372-4746a785d0d8?auto=format&fit=crop&w=500&q=80",
-        sub: "Gas Station • Port Blair"
+        desc: "Main Indian Oil fuel station in Port Blair town for bikes, cars, and rental vehicles.",
+        img: "https://images.unsplash.com/photo-1527018260372-4746a785d0d8?auto=format&fit=crop&w=700&q=80",
+        sub: "Port Blair • Gas Station"
       },
       {
-        id: 6,
+        id: 8,
         name: "Havelock Island Fuel Station",
         category: "fuel",
         lat: 11.9750,
         lng: 92.9800,
-        desc: "Main fuel distribution station for bikes and cars on Swaraj Dweep.",
-        img: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=500&q=80",
-        sub: "Gas Station • Swaraj Dweep"
-      },
-      {
-        id: 7,
-        name: "Shaheed Dweep (Neil Island)",
-        category: "attraction",
-        lat: 11.8389,
-        lng: 93.0336,
-        desc: "Peaceful island famous for natural rock bridges and coral diversity.",
-        img: "bg.jpg",
-        sub: "Neil Island"
+        desc: "Primary fuel station located near Havelock jetty for scootees and cars.",
+        img: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80",
+        sub: "Swaraj Dweep • Gas Station"
       }
     ];
 
-    // Initialize Leaflet Map centered on Port Blair, Andaman
+    // Initialize Map with Center Focus on Andaman Islands
     const map = L.map('map').setView([11.7401, 92.7340], 10);
 
-    // Add OpenStreetMap Tile Layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '© OpenStreetMap contributors'
@@ -438,36 +477,37 @@
 
     let markers = [];
 
-    // Function to render markers and cards
     function renderContent(filter = 'all') {
-      // Clear existing markers
+      // Clear Existing Markers
       markers.forEach(m => map.removeLayer(m));
       markers = [];
 
       const grid = document.getElementById('cardsGrid');
       grid.innerHTML = '';
 
-      const filtered = filter === 'all' 
+      const filteredData = filter === 'all' 
         ? locationsData 
         : locationsData.filter(item => item.category === filter);
 
-      filtered.forEach(item => {
-        // Add Marker to Map
+      filteredData.forEach(item => {
+        // Dynamic Icon Styling
         let markerColor = item.category === 'attraction' ? '#0284c7' : (item.category === 'hotel' ? '#10b981' : '#f59e0b');
-        
+        let iconName = item.category === 'attraction' ? 'fa-camera' : (item.category === 'hotel' ? 'fa-hotel' : 'fa-gas-pump');
+
         const customIcon = L.divIcon({
           className: 'custom-pin',
-          html: `<div style="background-color: ${markerColor}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-                   <i class="fa-solid ${item.category === 'attraction' ? 'fa-camera' : (item.category === 'hotel' ? 'fa-bed' : 'fa-gas-pump')}" style="color:white; font-size:10px;"></i>
+          html: `<div style="background-color: ${markerColor}; width: 28px; height: 28px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.4);">
+                   <i class="fa-solid ${iconName}" style="color:white; font-size:12px;"></i>
                  </div>`,
-          iconSize: [24, 24]
+          iconSize: [28, 28]
         });
 
+        // Add Map Pin Marker
         const marker = L.marker([item.lat, item.lng], { icon: customIcon }).addTo(map);
         marker.bindPopup(`<b>${item.name}</b><br>${item.desc}`);
         markers.push(marker);
 
-        // Add Card to Grid
+        // Add Card Component
         const cardHTML = `
           <div class="card">
             <div class="card-img">
@@ -488,14 +528,13 @@
       });
     }
 
-    // Filter tab clicks
-    function filterCategory(category) {
+    function filterCategory(category, evt) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      evt.currentTarget.classList.add('active');
       renderContent(category);
     }
 
-    // Initial load
+    // Initial Load
     renderContent('all');
   </script>
 </body>
