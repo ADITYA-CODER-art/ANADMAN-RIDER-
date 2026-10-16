@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andaman & Nicobar Ultimate Live Map & Travel Guide</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Leaflet CSS for Live Interactive Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #0b1120;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(11, 17, 32, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: #ffffff;
+    }
+
+    .btn-nav {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 1.5rem 4rem;
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.4) 0%, rgba(11, 17, 32, 0.9) 80%, #0b1120 100%),
+                  url('bg.jpg') center/cover no-repeat;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(217, 119, 6, 0.25);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fef3c7;
+      padding: 0.35rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Interactive Explorer Section */
+    .explorer-section {
+      max-width: 1200px;
+      margin: 2rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+    }
+
+    /* Live Map Container */
+    #map {
+      width: 100%;
+      height: 450px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(2, 132, 199, 0.5);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 0.8rem;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .map-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .map-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.3rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <i class="fa-regular fa-compass"></i> Andaman Live Hub
+      </a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#map-section">Live Map</a></li>
+        <li><a href="#directory">Hotels & Fuel</a></li>
+      </ul>
+      <button class="btn-nav">Emergency Help</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-map-location-dot"></i> Live Map & Complete Tourist Directory
+    </div>
+    <h1>Andaman & Nicobar Islands</h1>
+    <p>
+      Explore live interactive maps, top-rated hotels, famous tourist attractions, and fuel/gas stations across Port Blair & Havelock.
+    </p>
+  </section>
+
+  <!-- Main Content & Live Map Hub -->
+  <section id="map-section" class="explorer-section">
+    <div class="section-title">
+      <span>Live Interactive Tourist Map 🗺️</span>
+    </div>
+    
+    <!-- Filter Category Buttons -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterCategory('all')">Show All</button>
+      <button class="tab-btn" onclick="filterCategory('attraction')">🏛️ Attractions</button>
+      <button class="tab-btn" onclick="filterCategory('hotel')">🏨 Hotels & Resorts</button>
+      <button class="tab-btn" onclick="filterCategory('fuel')">⛽ Gas Stations / Fuel</button>
+    </div>
+
+    <!-- Live Map Container -->
+    <div id="map"></div>
+
+    <div class="section-title" id="directory">
+      <span>Complete Guide & Locations Details</span>
+    </div>
+
+    <!-- Dynamic Directory Cards Grid -->
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Cards will be injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    Copyright &copy; <span id="year"></span> Andaman Live Tourism Guide. All rights reserved.
+  </footer>
+
+  <!-- Leaflet JS for Map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // Copyright year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Comprehensive Andaman Database (Attractions, Hotels, Gas Stations)
+    const locationsData = [
+      {
+        id: 1,
+        name: "Cellular Jail",
+        category: "attraction",
+        lat: 11.6734,
+        lng: 92.7506,
+        desc: "Historic colonial prison in Port Blair showcasing India's freedom struggle.",
+        img: "bg.jpg",
+        sub: "Port Blair"
+      },
+      {
+        id: 2,
+        name: "Radhanagar Beach (Swaraj Dweep)",
+        category: "attraction",
+        lat: 11.9831,
+        lng: 92.9515,
+        desc: "Ranked among Asia's best beaches, known for turquoise waters and white sand.",
+        img: "bg.jpg",
+        sub: "Havelock Island"
+      },
+      {
+        id: 3,
+        name: "Sinclairs Bayview Hotel",
+        category: "hotel",
+        lat: 11.6953,
+        lng: 92.7482,
+        desc: "Premium beachside hotel offering panoramic views of the Bay of Bengal.",
+        img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80",
+        sub: "Hotel • Port Blair"
+      },
+      {
+        id: 4,
+        name: "Taj Exotica Resort & Spa",
+        category: "hotel",
+        lat: 11.9680,
+        lng: 92.9720,
+        desc: "Luxury 5-star beachfront resort nestled amidst coconut palms on Radhanagar beach.",
+        img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=500&q=80",
+        sub: "Luxury Resort • Havelock"
+      },
+      {
+        id: 5,
+        name: "IOCL Petrol Pump (PB Filling Station)",
+        category: "fuel",
+        lat: 11.6521,
+        lng: 92.7385,
+        desc: "Primary fuel & gas station in Port Blair for vehicle rentals and cabs.",
+        img: "https://images.unsplash.com/photo-1527018260372-4746a785d0d8?auto=format&fit=crop&w=500&q=80",
+        sub: "Gas Station • Port Blair"
+      },
+      {
+        id: 6,
+        name: "Havelock Island Fuel Station",
+        category: "fuel",
+        lat: 11.9750,
+        lng: 92.9800,
+        desc: "Main fuel distribution station for bikes and cars on Swaraj Dweep.",
+        img: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=500&q=80",
+        sub: "Gas Station • Swaraj Dweep"
+      },
+      {
+        id: 7,
+        name: "Shaheed Dweep (Neil Island)",
+        category: "attraction",
+        lat: 11.8389,
+        lng: 93.0336,
+        desc: "Peaceful island famous for natural rock bridges and coral diversity.",
+        img: "bg.jpg",
+        sub: "Neil Island"
+      }
+    ];
+
+    // Initialize Leaflet Map centered on Port Blair, Andaman
+    const map = L.map('map').setView([11.7401, 92.7340], 10);
+
+    // Add OpenStreetMap Tile Layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let markers = [];
+
+    // Function to render markers and cards
+    function renderContent(filter = 'all') {
+      // Clear existing markers
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = '';
+
+      const filtered = filter === 'all' 
+        ? locationsData 
+        : locationsData.filter(item => item.category === filter);
+
+      filtered.forEach(item => {
+        // Add Marker to Map
+        let markerColor = item.category === 'attraction' ? '#0284c7' : (item.category === 'hotel' ? '#10b981' : '#f59e0b');
+        
+        const customIcon = L.divIcon({
+          className: 'custom-pin',
+          html: `<div style="background-color: ${markerColor}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
+                   <i class="fa-solid ${item.category === 'attraction' ? 'fa-camera' : (item.category === 'hotel' ? 'fa-bed' : 'fa-gas-pump')}" style="color:white; font-size:10px;"></i>
+                 </div>`,
+          iconSize: [24, 24]
+        });
+
+        const marker = L.marker([item.lat, item.lng], { icon: customIcon }).addTo(map);
+        marker.bindPopup(`<b>${item.name}</b><br>${item.desc}`);
+        markers.push(marker);
+
+        // Add Card to Grid
+        const cardHTML = `
+          <div class="card">
+            <div class="card-img">
+              <img src="${item.img}" alt="${item.name}">
+              <div class="card-badge">${item.sub}</div>
+            </div>
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+            <div class="card-footer">
+              <span>📍 GPS: ${item.lat.toFixed(2)}, ${item.lng.toFixed(2)}</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank" class="map-link">
+                Navigate <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += cardHTML;
+      });
+    }
+
+    // Filter tab clicks
+    function filterCategory(category) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderContent(category);
+    }
+
+    // Initial load
+    renderContent('all');
+  </script>
+</body>
+</html>
